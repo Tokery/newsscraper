@@ -7,3 +7,5 @@ The rails app in the scraper directory can be run as follows:
 1. Change your directory to /scraper
 2. Run bundle install
 3. Use ruby bin\rails server on Windows to run the app (bin/rails server on Max and Linux)
+
+# How do I run the scraper?
