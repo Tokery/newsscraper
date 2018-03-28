@@ -3,7 +3,8 @@ class ArticlesController < ApplicationController
     
     def index
         # Obviously should not be hardcoded on ID
-        @headlines = Article.find(7)
+        headlines = Article.find(1)
+        @headlines = JSON.parse(headlines.text)
     end
 
     def create

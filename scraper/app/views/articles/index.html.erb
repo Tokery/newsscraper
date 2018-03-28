@@ -1,3 +1,5 @@
 <h1> View the data </h1>
 
-<%= @headlines.text %>
+<% @headlines.each do |headline| %>
+    <p><%= headline %></p>
+<% end %>
