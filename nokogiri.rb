@@ -4,7 +4,7 @@ require 'open-uri'
 require 'certified'
 require 'json'
 
-post_url = "http://localhost:3000/"
+$post_url = "http://localhost:3000/"
 
 def bloomberg_trending ()
     page = Nokogiri::HTML(open("https://www.bloomberg.com/canada"))
@@ -27,7 +27,7 @@ def cbc_trending()
 end
 
 def sendDataToApi (stories)
-    uri = URI.parse(post_url)
+    uri = URI.parse($post_url)
     http = Net::HTTP.new(uri.host, uri.port)
     request = Net::HTTP::Post.new("/articles")
     request.add_field('Content-Type', 'application/json')

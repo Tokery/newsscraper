@@ -2,8 +2,8 @@ class ArticlesController < ApplicationController
     skip_before_action :verify_authenticity_token
     
     def index
-        # Obviously should not be hardcoded on ID
-        headlines = Article.find(1)
+        # Get the largest ID in the database
+        headlines = Article.last
         @headlines = JSON.parse(headlines.text)
     end
 
