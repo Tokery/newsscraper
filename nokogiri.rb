@@ -4,7 +4,8 @@ require 'open-uri'
 require 'certified'
 require 'json'
 
-$post_url = "http://localhost:3000/"
+$post_to_prod = false
+$post_url = $post_to_prod ? "https://obscure-inlet-97748.herokuapp.com/" : "http://localhost:3000/"
 
 def bloomberg_trending ()
     page = Nokogiri::HTML(open("https://www.bloomberg.com/canada"))
@@ -29,10 +30,19 @@ end
 def sendDataToApi (stories)
     uri = URI.parse($post_url)
     http = Net::HTTP.new(uri.host, uri.port)
+    if ($post_to_prod) 
+        http.use_ssl = true
+    end
     request = Net::HTTP::Post.new("/articles")
     request.add_field('Content-Type', 'application/json')
     request.body = {'article' => {'title' => 'Bloomberg', 'text' => stories.to_json}}.to_json
-    response = http.request(request)
+    begin
+        response = http.request(request)
+    rescue Exception => e
+        puts "Did not POST due to exception"
+        puts e.message
+    end
+    puts "Response #{response.code} #{response.message}"
 end
 
 bloomberg_trending()
