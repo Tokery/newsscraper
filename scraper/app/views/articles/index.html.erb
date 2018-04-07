@@ -1,6 +1,6 @@
 <h1> Bloomberg Headlines </h1>
 
-<% @headlines.each do |headline| %>
-    <p><%= headline %></p>
+<% @headlines.each_with_index do |headline, index| %>
+    <p><a href="<%= @urls[index]%>"><%= headline %></a></p>
 <% end %>
 

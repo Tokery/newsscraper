@@ -3,8 +3,9 @@ class ArticlesController < ApplicationController
     
     def index
         # Get the largest ID in the database
-        headlines = Article.last
-        @headlines = JSON.parse(headlines.text)
+        articles = Article.last
+        @headlines = JSON.parse(articles.text)
+        @urls = JSON.parse(articles.url)
     end
 
     def create
@@ -18,6 +19,6 @@ class ArticlesController < ApplicationController
 
     private 
         def article_params
-            params.require(:article).permit(:title, :text)
+            params.require(:article).permit(:title, :text, :url)
         end
 end

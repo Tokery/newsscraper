@@ -13,12 +13,20 @@ def bloomberg_trending ()
     stories = page.css('ul.top-news-v3__stories li')
 
     headlines = []
+    urls = []
     stories.each { |story| 
         headline = story.css('article h1').text
+        link = story.css('article h1 a')[0]['href'] # For some reason [0] is required
+        # Sometimes links will not include protocol and host name. The following fixes this
+        protocol = link[0..3]
+        if (!(protocol.include? "http"))
+            link.prepend("https://www.bloomberg.com")
+        end
+        urls.push(link)
         headlines.push(headline)
     }
     puts "Done bloomberg collection"
-    sendDataToApi(headlines)
+    sendDataToApi(headlines, urls)
 end
 
 def newyorktimes_trending ()
@@ -27,7 +35,7 @@ end
 def cbc_trending()
 end
 
-def sendDataToApi (stories)
+def sendDataToApi (stories, urls)
     uri = URI.parse($post_url)
     http = Net::HTTP.new(uri.host, uri.port)
     if ($post_to_prod) 
@@ -35,7 +43,7 @@ def sendDataToApi (stories)
     end
     request = Net::HTTP::Post.new("/articles")
     request.add_field('Content-Type', 'application/json')
-    request.body = {'article' => {'title' => 'Bloomberg', 'text' => stories.to_json}}.to_json
+    request.body = {'article' => {'title' => 'Bloomberg', 'text' => stories.to_json, 'url' => urls.to_json}}.to_json
     begin
         response = http.request(request)
     rescue Exception => e
