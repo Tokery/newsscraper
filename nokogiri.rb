@@ -4,7 +4,11 @@ require 'open-uri'
 require 'certified'
 require 'json'
 
-$post_to_prod = false
+cmd_args = ARGV
+$post_to_prod = false;
+if (cmd_args.length > 0 && cmd_args[0] == "true" )
+    $post_to_prod = true
+end
 $post_url = $post_to_prod ? "https://obscure-inlet-97748.herokuapp.com/" : "http://localhost:3000/"
 
 def bloomberg_trending ()
