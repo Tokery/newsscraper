@@ -1,6 +1,11 @@
-<h1> Bloomberg Headlines </h1>
+<h1> Bloomberg Headlines</h1>
+<div id="page_size">Page Size</div>
 
 <% @headlines.each_with_index do |headline, index| %>
     <p><a href="<%= @urls[index]%>"><%= headline %></a></p>
 <% end %>
 
+<script>
+    var node = document.getElementById('page_size').firstChild;
+    node.nodeValue = 'Used ' + document.getElementsByTagName('HTML')[0].outerHTML.length/1024 + 'kb!' ;
+</script>
