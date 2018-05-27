@@ -24,20 +24,26 @@ $post_url = $post_to_prod ? "https://obscure-inlet-97748.herokuapp.com/" : "http
 def bloomberg_trending ()
     page = Nokogiri::HTML(open("https://www.bloomberg.com/canada"))
 
-    stories = page.css('ul.top-news-v3__stories li')
+    stories = page.css('div.story-package-module__stories')
 
     headlines = []
     urls = []
     stories.each { |story| 
-        headline = story.css('article h1').text
-        link = story.css('article h1 a')[0]['href'] # For some reason [0] is required
-        # Sometimes links will not include protocol and host name. The following fixes this
-        protocol = link[0..3]
-        if (!(protocol.include? "http"))
-            link.prepend("https://www.bloomberg.com")
+        begin
+            headline = story.css('article h3')[0].text
+            puts headline
+            link = story.css('article h3 a')[0]['href'] # 0 Chooses the first matching element to article h3 a
+            puts link
+            # Sometimes links will not include protocol and host name. The following fixes this
+            protocol = link[0..3]
+            if (!(protocol.include? "http"))
+                link.prepend("https://www.bloomberg.com")
+            end
+            urls.push(link)
+            headlines.push(headline)
+        rescue
+            break
         end
-        urls.push(link)
-        headlines.push(headline)
     }
     puts "Done bloomberg collection"
     sendDataToApi(headlines, urls)
