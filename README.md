@@ -2,6 +2,8 @@
 
 The purpose of the newscraper is to pull headlines from news sites (currently only Bloomberg), send those headlines to a Rails backend (inside the scraper directory) to be served on a minimal front-end or through voice-assistants (just a concept for now)
 
+**Note**: As of June 2018, Bloomberg changed their website layout + blocked requests from bots (seemingly) so this repo needs to be updated with a different source
+
 # How do I run this repo?
 The rails app in the scraper directory can be run as follows:
 1. Change your directory to /scraper
