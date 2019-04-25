@@ -15,7 +15,7 @@ before_script:
 scrape:
   stage: scrape
   script:
-  - python feed_miner.py
+  - python feed_reader.py
   artifacts:
     paths:
     - "*.json"
