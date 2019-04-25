@@ -9,7 +9,7 @@ import sys
 
 from tinydb import TinyDB
 
-RSS_FEED_URL  = "http://feeds.reuters.com/news/artsculture	"
+RSS_FEED_URL  = "http://feeds.reuters.com/reuters/businessNews"
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 logger = logging.getLogger(__name__)
