@@ -3,7 +3,8 @@ image: python:latest
 stages:
   - scrape
 
-# Change pip's cache to be inside the project directory since we can only cache local items
+# Change pip's cache directory to be inside the project directory since we can
+# only cache local items.
 variables:
   PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
 
@@ -13,8 +14,8 @@ before_script:
 
 scrape:
   stage: scrape
-  script: 
-  - python feed_reader.py
+  script:
+  - python feed_miner.py
   artifacts:
     paths:
-  - "*.json"
+    - "*.json"
